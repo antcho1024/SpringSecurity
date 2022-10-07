@@ -1,8 +1,8 @@
-package com.sparta.week02_1_login2.controller;
+package com.sparta.week02_1_login3.controller;
 
 
-import com.sparta.week02_1_login2.dto.SignupRequestDto;
-import com.sparta.week02_1_login2.service.UserService;
+import com.sparta.week02_1_login3.dto.SignupRequestDto;
+import com.sparta.week02_1_login3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

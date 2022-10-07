@@ -1,10 +1,10 @@
-package com.sparta.week02_1_login2.service;
+package com.sparta.week02_1_login3.service;
 
 
-import com.sparta.week02_1_login2.dto.SignupRequestDto;
-import com.sparta.week02_1_login2.model.User;
-import com.sparta.week02_1_login2.model.UserRepository;
-import com.sparta.week02_1_login2.model.UserRoleEnum;
+import com.sparta.week02_1_login3.dto.SignupRequestDto;
+import com.sparta.week02_1_login3.model.User;
+import com.sparta.week02_1_login3.model.UserRepository;
+import com.sparta.week02_1_login3.model.UserRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

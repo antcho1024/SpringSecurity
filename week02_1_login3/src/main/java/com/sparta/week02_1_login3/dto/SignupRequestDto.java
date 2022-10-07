@@ -1,4 +1,4 @@
-package com.sparta.week02_1_login2.dto;
+package com.sparta.week02_1_login3.dto;
 
 import lombok.Getter;
 import lombok.Setter;

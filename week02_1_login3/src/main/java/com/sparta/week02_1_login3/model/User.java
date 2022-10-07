@@ -1,4 +1,4 @@
-package com.sparta.week02_1_login2.model;
+package com.sparta.week02_1_login3.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

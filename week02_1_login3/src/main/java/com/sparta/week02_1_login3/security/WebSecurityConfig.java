@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public BCryptPasswordEncoder encodePassword() {
+    public BCryptPasswordEncoder encodePassword() { //암호화 알고리즘
         return new BCryptPasswordEncoder();
     }
 
