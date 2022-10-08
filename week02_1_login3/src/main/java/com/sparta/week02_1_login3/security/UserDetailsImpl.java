@@ -50,6 +50,8 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
+    //권한 반환 해주는 함수
+    //스프링 시큐리티가 로그인한 회원의 권한을 인식하도록
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         UserRoleEnum userRole = user.getRole();

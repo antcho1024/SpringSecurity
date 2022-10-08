@@ -2,7 +2,7 @@ package com.sparta.week02_1_login3.security;
 
 
 import com.sparta.week02_1_login3.model.User;
-import com.sparta.week02_1_login3.model.UserRepository;
+import com.sparta.week02_1_login3.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

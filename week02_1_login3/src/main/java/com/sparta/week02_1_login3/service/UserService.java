@@ -1,25 +1,13 @@
 package com.sparta.week02_1_login3.service;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.week02_1_login3.dto.KakaoUserInfoDto;
 import com.sparta.week02_1_login3.dto.SignupRequestDto;
 import com.sparta.week02_1_login3.model.User;
-import com.sparta.week02_1_login3.model.UserRepository;
+import com.sparta.week02_1_login3.repository.UserRepository;
 import com.sparta.week02_1_login3.model.UserRoleEnum;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 

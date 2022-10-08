@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.week02_1_login3.dto.KakaoUserInfoDto;
 import com.sparta.week02_1_login3.model.User;
-import com.sparta.week02_1_login3.model.UserRepository;
+import com.sparta.week02_1_login3.repository.UserRepository;
 import com.sparta.week02_1_login3.model.UserRoleEnum;
 import com.sparta.week02_1_login3.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -108,31 +108,74 @@ public class KakaoUserService {
         return new KakaoUserInfoDto(id, nickname, email);
     }
 
+//    private User registerKakaoUserIfNeeded(KakaoUserInfoDto kakaoUserInfo) {
+//        // DB 에 중복된 Kakao Id 가 있는지 확인
+//        Long kakaoId = kakaoUserInfo.getId();
+//        User kakaoUser = userRepository.findByKakaoId(kakaoId)
+//                .orElse(null);
+//        if (kakaoUser == null) {
+//            // 카카오 사용자 이메일과 동일한 이메일을 가진 회원이 있는지 확인
+//            String kakaoEmail = kakaoUserInfo.getEmail();
+//            kakaoUser = userRepository.findByEmail(kakaoEmail)
+//                    .orElse(null);
+//            if(kakaoUser == null){
+//                // 회원가입
+//                // username: kakao nickname
+//                String nickname = kakaoUserInfo.getNickname();
+//
+//                // password: random UUID
+//                String password = UUID.randomUUID().toString();
+//                String encodedPassword = passwordEncoder.encode(password);
+//
+//                // email: kakao email
+//                String email = kakaoUserInfo.getEmail();
+//                // role: 일반 사용자
+//                UserRoleEnum role = UserRoleEnum.USER;
+//
+//                kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
+//                userRepository.save(kakaoUser);
+//            }
+//            else kakaoUser.setKakaoId(kakaoId);
+//
+//        }
+//        return kakaoUser;
+//    }
+
+
     private User registerKakaoUserIfNeeded(KakaoUserInfoDto kakaoUserInfo) {
         // DB 에 중복된 Kakao Id 가 있는지 확인
         Long kakaoId = kakaoUserInfo.getId();
         User kakaoUser = userRepository.findByKakaoId(kakaoId)
                 .orElse(null);
         if (kakaoUser == null) {
-            // 회원가입
-            // username: kakao nickname
-            String nickname = kakaoUserInfo.getNickname();
+            // 카카오 사용자 이메일과 동일한 이메일을 가진 회원이 있는지 확인
+            String kakaoEmail = kakaoUserInfo.getEmail();
+            User sameEmailUser = userRepository.findByEmail(kakaoEmail).orElse(null); //왜 여기서 null.. 디버깅 하ㅐ보기
+            if (sameEmailUser != null) {
+                kakaoUser = sameEmailUser;
+                // 기존 회원정보에 카카오 Id 추가
+                kakaoUser.setKakaoId(kakaoId);
+            } else {
+                // 신규 회원가입
+                // username: kakao nickname
+                String nickname = kakaoUserInfo.getNickname();
 
-            // password: random UUID
-            String password = UUID.randomUUID().toString();
-            String encodedPassword = passwordEncoder.encode(password);
+                // password: random UUID
+                String password = UUID.randomUUID().toString();
+                String encodedPassword = passwordEncoder.encode(password);
 
-            // email: kakao email
-            String email = kakaoUserInfo.getEmail();
-            // role: 일반 사용자
-            UserRoleEnum role = UserRoleEnum.USER;
+                // email: kakao email
+                String email = kakaoUserInfo.getEmail();
+                // role: 일반 사용자
+                UserRoleEnum role = UserRoleEnum.USER;
 
-            kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
+                kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
+            }
+
             userRepository.save(kakaoUser);
         }
         return kakaoUser;
     }
-
     private void forceLogin(User kakaoUser) {
         UserDetails userDetails = new UserDetailsImpl(kakaoUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
