@@ -2,6 +2,7 @@ package com.sparta.week02_1_login3.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,12 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity // 스프링 Security 지원을 가능하게 함
+@EnableGlobalMethodSecurity(securedEnabled = true) // @Secured 어노테이션 활성화 -권한 설정
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder encodePassword() { //암호화 알고리즘
         return new BCryptPasswordEncoder();
-    }
+    } //password 일방향 암호화
 
     @Override
     public void configure(WebSecurity web) {
@@ -56,7 +58,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                // [로그아웃 기능]
                 .logout()
 //                // 로그아웃 처리 URL
-                .logoutUrl("/user/logout");
-//                    .permitAll();
+                .logoutUrl("/user/logout")
+//                    .permitAll()
+                .and()
+                .exceptionHandling()
+                // "접근 불가" 페이지 URL 설정
+                .accessDeniedPage("/forbidden.html");
     }
 }
