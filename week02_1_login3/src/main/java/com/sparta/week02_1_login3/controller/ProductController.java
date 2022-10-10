@@ -3,11 +3,14 @@ package com.sparta.week02_1_login3.controller;
 
 import com.sparta.week02_1_login3.dto.ProductMypriceRequestDto;
 import com.sparta.week02_1_login3.dto.ProductRequestDto;
+import com.sparta.week02_1_login3.model.ApiUseTime;
 import com.sparta.week02_1_login3.model.Product;
 import com.sparta.week02_1_login3.model.User;
 import com.sparta.week02_1_login3.model.UserRoleEnum;
+import com.sparta.week02_1_login3.repository.ApiUseTimeRepository;
 import com.sparta.week02_1_login3.security.UserDetailsImpl;
 import com.sparta.week02_1_login3.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
@@ -33,8 +36,10 @@ public class ProductController {
         // 로그인 되어 있는 회원 테이블의 ID
         Long userId = userDetails.getUser().getId();
 
+        Product product = productService.createProduct(requestDto, userId);
+
         // 응답 보내기
-        return productService.createProduct(requestDto, userId);
+        return product;
     }
 
     // 설정 가격 변경
@@ -55,11 +60,14 @@ public class ProductController {
             @RequestParam("isAsc") boolean isAsc,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
+        // 로그인 되어 있는 회원 테이블의 ID
         Long userId = userDetails.getUser().getId();
         page = page - 1;
+
         return productService.getProducts(userId, page, size, sortBy, isAsc);
     }
-    // (관리자용) 등록된 모든 상품 목록 조회
+
+    // (관리자용) 전체 상품 조회
     @Secured(UserRoleEnum.Authority.ADMIN)
     @GetMapping("/api/admin/products")
     public Page<Product> getAllProducts(
@@ -68,7 +76,7 @@ public class ProductController {
             @RequestParam("sortBy") String sortBy,
             @RequestParam("isAsc") boolean isAsc
     ) {
-        page = page -1;
+        page = page - 1;
         return productService.getAllProducts(page, size, sortBy, isAsc);
     }
 
