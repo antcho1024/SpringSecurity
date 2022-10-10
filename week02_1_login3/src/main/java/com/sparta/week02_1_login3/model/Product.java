@@ -1,11 +1,13 @@
 package com.sparta.week02_1_login3.model;
 
+import com.sparta.week02_1_login3.dto.ProductMypriceRequestDto;
 import com.sparta.week02_1_login3.dto.ProductRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
@@ -37,8 +39,15 @@ public class Product {
     @Column(nullable = false)
     private Long userId;
 
+    @ManyToMany
+    private List<Folder> folderList;
+
+
     // 관심 상품 생성 시 이용합니다.
     public Product(ProductRequestDto requestDto, Long userId) {
+        // 입력값 Validation
+//        ProductValidator.validateProductInput(requestDto, userId); //???
+
         // 관심상품을 등록한 회원 Id 저장
         this.userId = userId;
         this.title = requestDto.getTitle();
@@ -46,5 +55,9 @@ public class Product {
         this.link = requestDto.getLink();
         this.lprice = requestDto.getLprice();
         this.myprice = 0;
+    }
+
+    public void addFolder(Folder folder) {
+        this.folderList.add(folder);
     }
 }
