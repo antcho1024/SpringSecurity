@@ -9,7 +9,6 @@ import com.sparta.week02_1_login3.model.User;
 import com.sparta.week02_1_login3.repository.FolderRepository;
 import com.sparta.week02_1_login3.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

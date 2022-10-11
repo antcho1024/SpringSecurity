@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 public class ApiUseTimeController {
-    private ApiUseTimeRepository apiUseTimeRepository;
+    private final ApiUseTimeRepository apiUseTimeRepository;
 
     @Autowired
     public ApiUseTimeController(ApiUseTimeRepository apiUseTimeRepository) {
